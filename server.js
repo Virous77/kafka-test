@@ -12,7 +12,7 @@ export const sequelize = new Sequelize({
   dialect: "mysql",
 });
 
-const User = sequelize.define(
+sequelize.define(
   "user",
   {
     location: {
@@ -47,4 +47,6 @@ app.get("/", (req, res) => {
 app.listen(4000, () => console.log("connected"));
 
 // docker run -p 2181:2181 -d --rm zookeeper
+//docker exec -it 0b74860ef5ce mysql -uroot -p
 // docker run -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=localhost:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 --rm -d confluentinc/cp-kafka
+// node --env-file ../.env ./admin.js

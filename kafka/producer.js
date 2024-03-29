@@ -14,26 +14,24 @@ const rl = readline.createInterface({
 async function producerInit() {
   const producer = kafka.producer();
   await producer.connect();
-  console.log("connected");
 
   rl.setPrompt("> ");
   rl.prompt();
 
   rl.on("line", async (line) => {
-    const [rider, location] = line.split(" ");
+    const [location, rider] = line.split(" ");
     await producer.send({
       topic: "rider-updates",
       messages: [
         {
           partition: location.toLowerCase() === "north" ? 0 : 1,
           key: "location",
-          value: JSON.stringify({ name: rider, location: location }),
+          value: JSON.stringify({ name: location, location: rider }),
         },
       ],
     });
   }).on("close", async () => {
     await producer.disconnect();
-    console.log("done");
   });
 }
 

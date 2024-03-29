@@ -17,7 +17,6 @@ export const sequelize = new Sequelize({
 
 async function connect() {
   await sequelize.authenticate();
-  console.log("connected");
 }
 
 connect();
@@ -37,10 +36,9 @@ const logs = sequelize.define("user", {
 const input = process.argv[2];
 
 const createUser = async (req) => {
-  console.log(req);
   try {
-    const cc = await logs.create(JSON.parse(req));
-    console.log(cc);
+    const data = await logs.create(JSON.parse(req));
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -48,9 +46,7 @@ const createUser = async (req) => {
 
 export async function consumerInit() {
   const consumer = kafka.consumer({ groupId: input });
-
   await consumer.connect();
-  console.log("consumer connected");
 
   await consumer.subscribe({ topics: ["rider-updates"], fromBeginning: true });
 

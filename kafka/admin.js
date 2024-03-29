@@ -8,8 +8,6 @@ const kafka = new Kafka({
 export async function adminInit() {
   const admin = kafka.admin();
   admin.connect();
-  console.log("admin connected");
-
   await admin.createTopics({
     topics: [
       {
@@ -18,9 +16,6 @@ export async function adminInit() {
       },
     ],
   });
-
-  console.log("topics created");
-
   await admin.disconnect();
 }
 
